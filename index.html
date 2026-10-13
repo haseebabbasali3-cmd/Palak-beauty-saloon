@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palak Beauty Saloon | Luxury Salon & Spa Gujranwala</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                            gold: '#d4af37',
+                            goldlight: '#f3e5ab'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .rose-gradient-bg {
+            background: linear-gradient(135deg, #fff1f2 0%, #fecdd3 50%, #ffe4e6 100%);
+        }
+        .dark .rose-gradient-bg {
+            background: linear-gradient(135deg, #18181b 0%, #27272a 50%, #0f0f11 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 113, 133, 0.2);
+        }
+        .dark .glass-card {
+            background: rgba(24, 24, 27, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 113, 133, 0.15);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-rose-50/30 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 font-sans transition-colors duration-300">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md shadow-sm border-b border-rose-100 dark:border-zinc-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-rose-500 to-rose-300 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-solid font-serif text-xl font-bold">P</i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-serif font-bold tracking-tight text-zinc-900 dark:text-white block leading-none">Palak</span>
+                        <span class="text-xs uppercase tracking-widest text-rose-600 dark:text-rose-400 font-semibold">Beauty Saloon</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center space-x-8 font-medium text-sm">
+                    <a href="#services" class="hover:text-rose-600 dark:hover:text-rose-400 transition-colors">Services</a>
+                    <a href="#gallery" class="hover:text-rose-600 dark:hover:text-rose-400 transition-colors">Portfolio</a>
+                    <a href="#reviews" class="hover:text-rose-600 dark:hover:text-rose-400 transition-colors">Reviews</a>
+                    <a href="#location" class="hover:text-rose-600 dark:hover:text-rose-400 transition-colors">Find Us</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-3">
+                    <!-- Theme Toggle -->
+                    <button id="themeToggleBtn" aria-label="Toggle theme" class="p-2.5 rounded-full text-zinc-600 dark:text-zinc-300 hover:bg-rose-100 dark:hover:bg-zinc-800 transition-colors">
+                        <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                        <i class="fa-solid fa-sun hidden dark:block text-lg text-amber-400"></i>
+                    </button>
+
+                    <!-- Cart / Appointment Selection Drawer Button -->
+                    <button onclick="toggleCartDrawer()" class="relative p-2.5 bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 rounded-full hover:bg-rose-200 dark:hover:bg-rose-900 transition-colors">
+                        <i class="fa-solid fa-spa text-lg"></i>
+                        <span id="cartBadgeCount" class="absolute -top-1 -right-1 bg-rose-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-zinc-900 hidden">0</span>
+                    </button>
+
+                    <!-- My Appointments Manager Button -->
+                    <button onclick="openAppointmentsModal()" class="hidden sm:flex items-center gap-2 px-4 py-2 border border-rose-200 dark:border-rose-900/50 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-rose-700 dark:text-rose-300 rounded-full text-sm font-medium transition-all">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>My Bookings</span>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" aria-label="Open navigation menu" class="md:hidden p-2 rounded-lg text-zinc-600 dark:text-zinc-300">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileNav" class="hidden md:hidden border-t border-rose-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-4 pt-3 pb-6 space-y-3">
+            <a href="#services" class="block py-2 text-zinc-700 dark:text-zinc-200 font-medium">Services</a>
+            <a href="#gallery" class="block py-2 text-zinc-700 dark:text-zinc-200 font-medium">Portfolio</a>
+            <a href="#reviews" class="block py-2 text-zinc-700 dark:text-zinc-200 font-medium">Reviews</a>
+            <a href="#location" class="block py-2 text-zinc-700 dark:text-zinc-200 font-medium">Find Us</a>
+            <button onclick="openAppointmentsModal()" class="w-full text-left py-2 text-rose-600 dark:text-rose-400 font-semibold">
+                <i class="fa-solid fa-calendar-check mr-2"></i> My Scheduled Bookings
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden py-16 lg:py-24 rose-gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-center lg:text-left">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-200/60 dark:bg-rose-900/40 text-rose-800 dark:text-rose-200 text-xs font-semibold uppercase tracking-wider">
+                        <i class="fa-solid fa-gem text-rose-600"></i> Luxury Beauty Experience in Gujranwala
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-zinc-900 dark:text-white leading-tight">
+                        Unveil Your Natural <span class="text-rose-600 dark:text-rose-400 italic">Elegance & Charm</span>
+                    </h1>
+                    <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-300 max-w-xl mx-auto lg:mx-0">
+                        Welcome to Palak Beauty Saloon. Step into a world of tailored luxury—from traditional bridal perfection to deep rejuvenating skin therapy and signature hair styling.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
+                        <a href="#services" class="px-7 py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-medium rounded-full shadow-lg shadow-rose-500/25 transition-all transform hover:-translate-y-0.5">
+                            <i class="fa-solid fa-list-check mr-2"></i> Explore & Select Services
+                        </a>
+                        <a href="https://wa.me/923177265790?text=Hello%20Palak%20Beauty%20Saloon,%20I%20would%20like%20to%20inquire%20about%20your%20services." target="_blank" class="px-7 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-full shadow-lg transition-all flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> Quick WhatsApp
+                        </a>
+                    </div>
+
+                    <!-- Quick Info Pill -->
+                    <div class="pt-6 border-t border-rose-200/60 dark:border-zinc-800 grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <p class="text-xl font-bold text-zinc-900 dark:text-white font-serif">Islam City</p>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400">Town, Gujranwala</p>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold text-zinc-900 dark:text-white font-serif">Multi-Booking</p>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400">Select Multiple Services</p>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold text-zinc-900 dark:text-white font-serif">Custom Quotes</p>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400">Tailored Pricing</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Showcase Grid Images -->
+                <div class="grid grid-cols-2 gap-4 relative">
+                    <div class="space-y-4">
+                        <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&q=80&w=600" alt="Bridal & Engagement Makeup" class="rounded-2xl shadow-lg object-cover h-64 w-full border-2 border-white dark:border-zinc-800">
+                        <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=80&w=600" alt="Hair Styling & Keratin Treatment" class="rounded-2xl shadow-lg object-cover h-44 w-full border-2 border-white dark:border-zinc-800">
+                    </div>
+                    <div class="space-y-4 pt-8">
+                        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=600" alt="Skin Care Facial Treatment" class="rounded-2xl shadow-lg object-cover h-44 w-full border-2 border-white dark:border-zinc-800">
+                        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&q=80&w=600" alt="Nail Spa & Manicure" class="rounded-2xl shadow-lg object-cover h-64 w-full border-2 border-white dark:border-zinc-800">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-rose-600 dark:text-rose-400 text-sm font-semibold tracking-widest uppercase">Tailored Beauty Catalog</span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold text-zinc-900 dark:text-white mt-2">Our Exclusive Treatments</h2>
+            <p class="text-zinc-600 dark:text-zinc-400 mt-3 text-sm sm:text-base">
+                Select your preferred services below. You can pick multiple treatments at once to create a personalized multi-service appointment.
+            </p>
+
+            <!-- Search & Filter Bar -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-between">
+                <div class="relative w-full sm:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+                    <input type="text" id="serviceSearchInput" oninput="filterServices()" placeholder="Search hair, facial, bridal..." class="w-full pl-10 pr-4 py-2.5 rounded-full border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+                </div>
+                
+                <!-- Category Tabs -->
+                <div class="flex items-center gap-2 overflow-x-auto hide-scrollbar w-full sm:w-auto py-1" id="categoryFilterTabs">
+                    <button onclick="setCategoryFilter('all')" class="cat-btn active px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-rose-600 text-white shadow-sm">All</button>
+                    <button onclick="setCategoryFilter('bridal')" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-rose-100 dark:border-zinc-700 hover:border-rose-400">Bridal & Party</button>
+                    <button onclick="setCategoryFilter('hair')" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-rose-100 dark:border-zinc-700 hover:border-rose-400">Hair Care</button>
+                    <button onclick="setCategoryFilter('skin')" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-rose-100 dark:border-zinc-700 hover:border-rose-400">Skin & Facial</button>
+                    <button onclick="setCategoryFilter('nails')" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-rose-100 dark:border-zinc-700 hover:border-rose-400">Nail Spa</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Grid -->
+        <div id="servicesGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Dynamic Services populated via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-rose-100/40 dark:bg-zinc-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-rose-600 dark:text-rose-400 text-sm font-semibold tracking-widest uppercase">Our Real Work</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-zinc-900 dark:text-white mt-2">Saloon Portfolio Gallery</h2>
+                <p class="text-zinc-600 dark:text-zinc-400 mt-2 text-sm">
+                    Browse real transformations and client looks crafted with love at Palak Beauty Saloon.
+                </p>
+            </div>
+
+            <!-- Gallery Filter -->
+            <div class="flex justify-center gap-2 mb-8 flex-wrap">
+                <button onclick="filterGallery('all')" class="gal-btn active px-4 py-1.5 rounded-full text-xs font-semibold bg-rose-600 text-white">All Works</button>
+                <button onclick="filterGallery('makeup')" class="gal-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-rose-200 dark:border-zinc-700">Bridal & Makeup</button>
+                <button onclick="filterGallery('hair')" class="gal-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-rose-200 dark:border-zinc-700">Hair Transformations</button>
+                <button onclick="filterGallery('facial')" class="gal-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-rose-200 dark:border-zinc-700">Facial & Glow</button>
+                <button onclick="filterGallery('nails')" class="gal-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-rose-200 dark:border-zinc-700">Nail Art</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Javascript populated pictures -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-12 items-start">
+            <div>
+                <span class="text-rose-600 dark:text-rose-400 text-sm font-semibold tracking-widest uppercase">Client Testimonials</span>
+                <h2 class="text-3xl font-serif font-bold text-zinc-900 dark:text-white mt-2">What Our Clients Say</h2>
+                <p class="text-zinc-600 dark:text-zinc-400 text-sm mt-3">
+                    We pride ourselves on providing comfortable, professional, and memorable salon experiences in Gujranwala.
+                </p>
+
+                <!-- Rating Stats -->
+                <div class="mt-6 p-6 rounded-2xl glass-card text-center">
+                    <p class="text-5xl font-serif font-bold text-rose-600 dark:text-rose-400">4.9</p>
+                    <div class="flex justify-center text-amber-400 gap-1 my-2 text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Based on verified client reviews in Islam City Town</p>
+                </div>
+
+                <!-- Add Review Button -->
+                <button onclick="openReviewModal()" class="w-full mt-4 py-3 bg-rose-600 hover:bg-rose-700 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i> Leave Your Feedback
+                </button>
+            </div>
+
+            <div class="lg:col-span-2 grid sm:grid-cols-2 gap-6" id="reviewsContainer">
+                <!-- Javascript populated reviews -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Contact Section -->
+    <section id="location" class="py-20 bg-rose-100/40 dark:bg-zinc-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-rose-600 dark:text-rose-400 text-sm font-semibold tracking-widest uppercase">Visit Our Saloon</span>
+                <h2 class="text-3xl font-serif font-bold text-zinc-900 dark:text-white mt-2">Islam City Town, Gujranwala</h2>
+                <p class="text-zinc-600 dark:text-zinc-400 mt-2 text-sm">
+                    Conveniently located for all your beauty, bridal, and hair care needs. Walk-ins & bookings welcome!
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Contact Info Cards -->
+                <div class="space-y-4">
+                    <div class="p-6 rounded-2xl glass-card flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-zinc-900 dark:text-white">Our Address</h4>
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-1">Palak Beauty Saloon, Islam City Town, Gujranwala, Punjab, Pakistan</p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-2xl glass-card flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-zinc-900 dark:text-white">Phone & WhatsApp</h4>
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-1">0317 7265790</p>
+                            <span class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Available for quick queries</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-2xl glass-card flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-zinc-900 dark:text-white">Salon Timings</h4>
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-1">Monday - Sunday: 11:00 AM - 09:00 PM</p>
+                            <span class="text-xs text-rose-600 dark:text-rose-400">Prior booking recommended for Bridals</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Quick Actions & Info Panel -->
+                <div class="lg:col-span-2 rounded-2xl glass-card p-8 flex flex-col justify-between relative overflow-hidden">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-zinc-900 dark:text-white mb-3">Book Multiple Services or Get a Custom Consultation</h3>
+                        <p class="text-zinc-600 dark:text-zinc-400 text-sm mb-6">
+                            Have specific questions about customized bridal packages, keratin hair care, or facial skin rejuvenation? Reach out directly via WhatsApp or phone.
+                        </p>
+                        <div class="grid sm:grid-cols-3 gap-4">
+                            <a href="tel:03177265790" class="p-4 rounded-xl border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-center hover:border-rose-500 transition-colors">
+                                <i class="fa-solid fa-phone-flip text-rose-600 text-2xl mb-2"></i>
+                                <p class="font-bold text-sm">Call Now</p>
+                                <p class="text-xs text-zinc-500">0317 7265790</p>
+                            </a>
+                            <a href="https://wa.me/923177265790?text=Hi%20Palak%20Beauty%20Saloon,%20I%20want%20to%20inquire%20about%20booking%20and%20consultation." target="_blank" class="p-4 rounded-xl border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-center hover:border-emerald-500 transition-colors">
+                                <i class="fa-brands fa-whatsapp text-emerald-500 text-2xl mb-2"></i>
+                                <p class="font-bold text-sm">WhatsApp Chat</p>
+                                <p class="text-xs text-zinc-500">Instant Reply</p>
+                            </a>
+                            <a href="https://maps.google.com/?q=Islam+City+Town+Gujranwala" target="_blank" class="p-4 rounded-xl border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-center hover:border-blue-500 transition-colors">
+                                <i class="fa-solid fa-map-location-dot text-blue-500 text-2xl mb-2"></i>
+                                <p class="font-bold text-sm">Get Directions</p>
+                                <p class="text-xs text-zinc-500">Islam City Town</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-rose-100 dark:border-zinc-800 flex items-center justify-between text-xs text-zinc-500">
+                        <span><i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i> Hygienic & Sanitized Equipment</span>
+                        <span><i class="fa-solid fa-shield-heart text-rose-500 mr-1"></i> Female Staff Professionals</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-900 text-zinc-400 py-12 border-t border-zinc-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <a href="#" class="inline-flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center font-serif font-bold">P</div>
+                <span class="text-xl font-serif font-bold text-white">Palak Beauty Saloon</span>
+            </a>
+            <p class="text-xs text-zinc-500 max-w-md mx-auto">
+                Islam City Town, Gujranwala • Phone: 0317 7265790 • Premium Bridal, Hair, Skin & Spa Experience
+            </p>
+            <p class="text-xs text-zinc-600">
+                &copy; <span id="yearSpan"></span> Palak Beauty Saloon. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Drawer: Multi-Service Booking Cart / Selection -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+        <div class="absolute inset-0 bg-zinc-900/60 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer()"></div>
+
+        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <div class="pointer-events-auto w-screen max-w-md bg-white dark:bg-zinc-900 shadow-2xl flex flex-col">
+                <!-- Header -->
+                <div class="p-6 bg-rose-50 dark:bg-zinc-800 border-b border-rose-100 dark:border-zinc-700 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-serif font-bold text-zinc-900 dark:text-white">Selected Services Cart</h3>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400">Book multiple services in one request</p>
+                    </div>
+                    <button onclick="toggleCartDrawer()" aria-label="Close cart drawer" class="p-2 rounded-full hover:bg-rose-200 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-300">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cartItemsContainer">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Footer / Checkout Form -->
+                <div class="p-6 border-t border-rose-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 space-y-4">
+                    <form id="multiBookingForm" onsubmit="handleMultiBookingSubmit(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Your Full Name *</label>
+                            <input type="text" id="clientName" required placeholder="e.g. Ayesha Khan" class="w-full px-3 py-2 rounded-lg border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Phone / WhatsApp Number *</label>
+                            <input type="tel" id="clientPhone" required placeholder="03XXXXXXXXX" class="w-full px-3 py-2 rounded-lg border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Preferred Date *</label>
+                                <input type="date" id="clientDate" required class="w-full px-3 py-2 rounded-lg border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Preferred Time *</label>
+                                <input type="time" id="clientTime" required class="w-full px-3 py-2 rounded-lg border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submitBookingBtn" class="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white font-medium rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Submit & Send via WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: My Scheduled Appointments Manager -->
+    <div id="appointmentsModal" class="fixed inset-0 z-50 overflow-y-auto hidden" role="dialog" aria-modal="true">
+        <div class="min-h-screen px-4 flex items-center justify-center">
+            <div class="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm" onclick="closeAppointmentsModal()"></div>
+
+            <div class="relative bg-white dark:bg-zinc-900 w-full max-w-2xl rounded-2xl shadow-2xl p-6 sm:p-8 space-y-6 z-10 border border-rose-100 dark:border-zinc-800">
+                <div class="flex items-center justify-between border-b border-rose-100 dark:border-zinc-800 pb-4">
+                    <div>
+                        <h3 class="text-xl font-serif font-bold text-zinc-900 dark:text-white">My Appointment History</h3>
+                        <p class="text-xs text-zinc-500">Your saved bookings at Palak Beauty Saloon</p>
+                    </div>
+                    <button onclick="closeAppointmentsModal()" aria-label="Close appointment history" class="p-2 rounded-full hover:bg-rose-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-300">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <div id="savedAppointmentsList" class="space-y-4 max-h-96 overflow-y-auto">
+                    <!-- Javascript populated -->
+                </div>
+
+                <div class="flex justify-end pt-4 border-t border-rose-100 dark:border-zinc-800">
+                    <button onclick="closeAppointmentsModal()" class="px-5 py-2 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 rounded-lg text-sm font-medium">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Add Review -->
+    <div id="reviewModal" class="fixed inset-0 z-50 overflow-y-auto hidden" role="dialog" aria-modal="true">
+        <div class="min-h-screen px-4 flex items-center justify-center">
+            <div class="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm" onclick="closeReviewModal()"></div>
+
+            <div class="relative bg-white dark:bg-zinc-900 w-full max-w-lg rounded-2xl shadow-2xl p-6 sm:p-8 space-y-5 z-10 border border-rose-100 dark:border-zinc-800">
+                <div class="flex items-center justify-between border-b border-rose-100 dark:border-zinc-800 pb-3">
+                    <h3 class="text-lg font-serif font-bold text-zinc-900 dark:text-white">Write a Review</h3>
+                    <button onclick="closeReviewModal()" aria-label="Close review modal" class="p-2 rounded-full hover:bg-rose-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-300">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <form id="addReviewForm" onsubmit="handleReviewSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Your Name</label>
+                        <input type="text" id="reviewAuthor" required placeholder="e.g. Sana Malik" class="w-full px-3 py-2 rounded-lg border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Service Received</label>
+                        <input type="text" id="reviewService" required placeholder="e.g. Hydrafacial & Keratin Treatment" class="w-full px-3 py-2 rounded-lg border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Rating</label>
+                        <select id="reviewRating" class="w-full px-3 py-2 rounded-lg border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                            <option value="5">5 Stars - Outstanding</option>
+                            <option value="4">4 Stars - Very Good</option>
+                            <option value="3">3 Stars - Good</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Your Review Comment</label>
+                        <textarea id="reviewComment" rows="3" required placeholder="Share your experience with Palak Saloon..." class="w-full px-3 py-2 rounded-lg border border-rose-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-rose-500 outline-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-medium rounded-xl transition-colors">
+                        Post Review
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- SERVICES DATA (No Prices Shown) ---
+        const servicesData = [
+            {
+                id: 'serv-1',
+                title: 'Signature Bridal Makeup',
+                category: 'bridal',
+                image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&q=80&w=600',
+                desc: 'Complete bridal glam with heavy jewelry setting, contouring, high-definition makeup & long-lasting fix.',
+                tag: 'Contact for Quote'
+            },
+            {
+                id: 'serv-2',
+                title: 'Engagement & Barat Makeup',
+                category: 'bridal',
+                image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=600',
+                desc: 'Soft glam, glitter eye look, dupatta draping, and hairstyle customized to your event attire.',
+                tag: 'Custom Package'
+            },
+            {
+                id: 'serv-3',
+                title: 'Keratin & Protein Hair Treatment',
+                category: 'hair',
+                image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=80&w=600',
+                desc: 'Deep nourishing therapy for frizzy hair, leaving locks silky, straight, and glossy.',
+                tag: 'Inquire via WhatsApp'
+            },
+            {
+                id: 'serv-4',
+                title: 'Hair Color, Highlights & Dye',
+                category: 'hair',
+                image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=600',
+                desc: 'Balayage, lowlights, full coverage root touch-ups using premium ammonia-free colors.',
+                tag: 'Contact for Quote'
+            },
+            {
+                id: 'serv-5',
+                title: 'Deep Hydrafacial & Skin Therapy',
+                category: 'skin',
+                image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=600',
+                desc: 'Exfoliation, pore extraction, LED light therapy, and deep hydration mask for instant glow.',
+                tag: 'Inquire via WhatsApp'
+            },
+            {
+                id: 'serv-6',
+                title: 'Whitening & Herbal Facial',
+                category: 'skin',
+                image: 'https://images.unsplash.com/photo-1512290900676-26c2a4d0b5ae?auto=format&fit=crop&q=80&w=600',
+                desc: 'Organic herbals and vitamin C infusion to clear tan lines, spots, and refresh dull skin.',
+                tag: 'Custom Package'
+            },
+            {
+                id: 'serv-7',
+                title: 'Deluxe Manicure & Pedicure Spa',
+                category: 'nails',
+                image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&q=80&w=600',
+                desc: 'Soaking massage, dead skin exfoliation, cuticle care, and gel polish finish.',
+                tag: 'Contact for Quote'
+            },
+            {
+                id: 'serv-8',
+                title: 'Custom Nail Art & Extensions',
+                category: 'nails',
+                image: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&q=80&w=600',
+                desc: 'Acrylic extensions, glitter embellishments, 3D floral nail art designs.',
+                tag: 'Inquire via WhatsApp'
+            },
+            {
+                id: 'serv-9',
+                title: 'Threading, Lash Lifting & Waxing',
+                category: 'skin',
+                image: 'https://images.unsplash.com/photo-1522337094846-8a83811221f6?auto=format&fit=crop&q=80&w=600',
+                desc: 'Eyebrow shaping, full face waxing, eyelash tinting and keratine lash lifting.',
+                tag: 'Contact for Quote'
+            }
+        ];
+
+        // --- GALLERY DATA ---
+        const galleryData = [
+            { category: 'makeup', title: 'Royal Bridal Look', img: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&q=80&w=600' },
+            { category: 'hair', title: 'Glossy Keratin Finish', img: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=80&w=600' },
+            { category: 'facial', title: 'Hydrafacial Rejuvenation', img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=600' },
+            { category: 'nails', title: 'Glamour Gel Nail Art', img: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&q=80&w=600' },
+            { category: 'makeup', title: 'Soft Engagement Glam', img: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=600' },
+            { category: 'hair', title: 'Ash Blonde Highlights', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=600' }
+        ];
+
+        // --- REVIEWS DATA ---
+        let initialReviews = [
+            { name: 'Fatima Zohra', service: 'Bridal Makeup', rating: 5, comment: 'Palak Saloon made my big day so special! The bridal makeup lasted all night and looked flawless in photos.' },
+            { name: 'Hina Tariq', service: 'Keratin Hair Treatment', rating: 5, comment: 'Extremely professional hair transformation! My hair is super smooth and easy to manage now.' },
+            { name: 'Saba Parvez', service: 'Hydrafacial & Mani Pedi', rating: 5, comment: 'Loved the relaxing spa atmosphere in Islam City Town. The facial left my skin glowing instantly.' }
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let selectedServicesCart = [];
+        let activeCategory = 'all';
+        let activeGalleryCategory = 'all';
+
+        // Initialize on DOM Ready
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('yearSpan').textContent = new Date().getFullYear();
+            renderServices();
+            renderGallery();
+            renderReviews();
+            updateCartBadge();
+
+            // Mobile menu toggle
+            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                document.getElementById('mobileNav').classList.toggle('hidden');
+            });
+
+            // Theme Toggle Setup
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            themeToggleBtn.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                const isDark = document.documentElement.classList.contains('dark');
+                localStorage.setItem('palak_theme', isDark ? 'dark' : 'light');
+            });
+
+            if (localStorage.getItem('palak_theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        });
+
+        function renderServices() {
+            const container = document.getElementById('servicesGrid');
+            const searchVal = document.getElementById('serviceSearchInput').value.toLowerCase();
+
+            const filtered = servicesData.filter(s => {
+                const matchesCat = (activeCategory === 'all' || s.category === activeCategory);
+                const matchesSearch = s.title.toLowerCase().includes(searchVal) || s.desc.toLowerCase().includes(searchVal);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-zinc-500">
+                        <i class="fa-solid fa-sparkles text-3xl mb-2 text-rose-400"></i>
+                        <p>No services found matching your criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(s => {
+                const isSelected = selectedServicesCart.some(item => item.id === s.id);
+                return `
+                    <div class="glass-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between">
+                        <div>
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="${s.image}" alt="${s.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                                <span class="absolute top-3 right-3 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-zinc-700">
+                                    <i class="fa-solid fa-tags text-xs mr-1"></i> ${s.tag}
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-serif font-bold text-zinc-900 dark:text-white">${s.title}</h3>
+                                <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2">${s.desc}</p>
+                            </div>
+                        </div>
+
+                        <div class="p-6 pt-0">
+                            <button onclick="toggleServiceSelection('${s.id}')" class="w-full py-2.5 rounded-xl font-medium text-sm transition-all flex items-center justify-center gap-2 ${
+                                isSelected 
+                                ? 'bg-emerald-600 text-white shadow-md' 
+                                : 'bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 hover:bg-rose-200 dark:hover:bg-rose-900'
+                            }">
+                                <i class="fa-solid ${isSelected ? 'fa-circle-check' : 'fa-plus'}"></i>
+                                <span>${isSelected ? 'Selected for Appointment' : 'Add to Appointment'}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function setCategoryFilter(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('#categoryFilterTabs .cat-btn').forEach(btn => {
+                btn.classList.remove('bg-rose-600', 'text-white');
+                btn.classList.add('bg-white', 'dark:bg-zinc-800', 'text-zinc-700', 'dark:text-zinc-300');
+            });
+            event.target.classList.add('bg-rose-600', 'text-white');
+            renderServices();
+        }
+
+        function filterServices() {
+            renderServices();
+        }
+
+        function toggleServiceSelection(serviceId) {
+            const service = servicesData.find(s => s.id === serviceId);
+            if (!service) return;
+
+            const index = selectedServicesCart.findIndex(item => item.id === serviceId);
+            if (index > -1) {
+                selectedServicesCart.splice(index, 1);
+            } else {
+                selectedServicesCart.push(service);
+            }
+
+            updateCartBadge();
+            renderServices();
+            renderCartDrawerItems();
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadgeCount');
+            const count = selectedServicesCart.length;
+            badge.textContent = count;
+            if (count > 0) {
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            drawer.classList.toggle('hidden');
+            if (!drawer.classList.contains('hidden')) {
+                renderCartDrawerItems();
+            }
+        }
+
+        function renderCartDrawerItems() {
+            const container = document.getElementById('cartItemsContainer');
+            if (selectedServicesCart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16 text-zinc-400">
+                        <i class="fa-solid fa-spa text-4xl mb-3 text-rose-300"></i>
+                        <p class="font-medium">No services selected yet.</p>
+                        <p class="text-xs text-zinc-500 mt-1">Browse services and add multiple treatments to your list!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = selectedServicesCart.map(item => `
+                <div class="flex items-center justify-between p-3 rounded-xl border border-rose-100 dark:border-zinc-800 bg-white dark:bg-zinc-800/50">
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" alt="${item.title}" class="w-12 h-12 rounded-lg object-cover">
+                        <div>
+                            <h4 class="text-sm font-bold text-zinc-900 dark:text-white">${item.title}</h4>
+                            <span class="text-xs text-rose-600 dark:text-rose-400 font-medium">${item.tag}</span>
+                        </div>
+                    </div>
+                    <button onclick="toggleServiceSelection('${item.id}')" class="p-2 text-zinc-400 hover:text-rose-600">
+                        <i class="fa-solid fa-trash-can text-sm"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function handleMultiBookingSubmit(e) {
+            e.preventDefault();
+            if (selectedServicesCart.length === 0) {
+                alert("Please select at least one service before submitting your appointment.");
+                return;
+            }
+
+            const name = document.getElementById('clientName').value;
+            const phone = document.getElementById('clientPhone').value;
+            const date = document.getElementById('clientDate').value;
+            const time = document.getElementById('clientTime').value;
+
+            const newBooking = {
+                id: 'BOOK-' + Date.now(),
+                name,
+                phone,
+                date,
+                time,
+                services: [...selectedServicesCart],
+                status: 'Confirmed Request'
+            };
+
+            // Save to LocalStorage
+            const existingBookings = JSON.parse(localStorage.getItem('palak_bookings') || '[]');
+            existingBookings.push(newBooking);
+            localStorage.setItem('palak_bookings', JSON.stringify(existingBookings));
+
+            // Generate WhatsApp message
+            const serviceTitles = selectedServicesCart.map(s => `• ${s.title}`).join('%0A');
+            const message = `Hello Palak Beauty Saloon!%0A%0AI would like to book a multi-service appointment:%0A${serviceTitles}%0A%0A*Client Details:*%0AName: ${name}%0APhone: ${phone}%0ADate: ${date}%0ATime: ${time}%0ALocation: Islam City Town, Gujranwala`;
+
+            // Redirect to WhatsApp
+            window.open(`https://wa.me/923177265790?text=${message}`, '_blank');
+
+            // Reset Form & Cart
+            selectedServicesCart = [];
+            updateCartBadge();
+            renderServices();
+            toggleCartDrawer();
+            document.getElementById('multiBookingForm').reset();
+        }
+
+        function openAppointmentsModal() {
+            renderAppointmentsHistory();
+            document.getElementById('appointmentsModal').classList.remove('hidden');
+        }
+
+        function closeAppointmentsModal() {
+            document.getElementById('appointmentsModal').classList.add('hidden');
+        }
+
+        function renderAppointmentsHistory() {
+            const container = document.getElementById('savedAppointmentsList');
+            const bookings = JSON.parse(localStorage.getItem('palak_bookings') || '[]');
+
+            if (bookings.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-10 text-zinc-400">
+                        <i class="fa-solid fa-calendar-xmark text-3xl mb-2 text-rose-300"></i>
+                        <p>No previous scheduled bookings found.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = bookings.map(b => `
+                <div class="p-4 rounded-xl border border-rose-100 dark:border-zinc-800 bg-rose-50/50 dark:bg-zinc-800/40 space-y-2">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-rose-200 dark:bg-rose-900 text-rose-800 dark:text-rose-200">${b.id}</span>
+                            <h4 class="font-bold text-zinc-900 dark:text-white mt-1">${b.name} (${b.phone})</h4>
+                        </div>
+                        <button onclick="cancelBooking('${b.id}')" class="text-xs text-rose-600 hover:underline">Cancel Booking</button>
+                    </div>
+                    <div class="text-xs text-zinc-600 dark:text-zinc-400">
+                        <i class="fa-solid fa-clock text-rose-500 mr-1"></i> ${b.date} at ${b.time}
+                    </div>
+                    <div class="pt-2 border-t border-rose-100 dark:border-zinc-700/50">
+                        <p class="text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">Booked Services:</p>
+                        <ul class="text-xs text-zinc-600 dark:text-zinc-400 space-y-0.5">
+                            ${b.services.map(s => `<li>• ${s.title}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function cancelBooking(id) {
+            let bookings = JSON.parse(localStorage.getItem('palak_bookings') || '[]');
+            bookings = bookings.filter(b => b.id !== id);
+            localStorage.setItem('palak_bookings', JSON.stringify(bookings));
+            renderAppointmentsHistory();
+        }
+
+        function renderGallery() {
+            const container = document.getElementById('galleryGrid');
+            const filtered = activeGalleryCategory === 'all' 
+                ? galleryData 
+                : galleryData.filter(g => g.category === activeGalleryCategory);
+
+            container.innerHTML = filtered.map(g => `
+                <div class="group relative overflow-hidden rounded-2xl shadow-md h-64">
+                    <img src="${g.img}" alt="${g.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <p class="text-white font-serif font-bold text-lg">${g.title}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterGallery(cat) {
+            activeGalleryCategory = cat;
+            document.querySelectorAll('.gal-btn').forEach(btn => {
+                btn.classList.remove('bg-rose-600', 'text-white');
+                btn.classList.add('bg-white', 'dark:bg-zinc-800', 'text-zinc-700', 'dark:text-zinc-300');
+            });
+            event.target.classList.add('bg-rose-600', 'text-white');
+            renderGallery();
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviewsContainer');
+            const stored = JSON.parse(localStorage.getItem('palak_reviews') || '[]');
+            const allReviews = [...stored, ...initialReviews];
+
+            container.innerHTML = allReviews.map(r => `
+                <div class="p-6 rounded-2xl glass-card space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-zinc-900 dark:text-white">${r.name}</h4>
+                        <div class="text-amber-400 text-xs">
+                            ${'<i class="fa-solid fa-star"></i>'.repeat(r.rating)}
+                        </div>
+                    </div>
+                    <span class="inline-block text-xs px-2.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-medium">
+                        ${r.service}
+                    </span>
+                    <p class="text-sm text-zinc-600 dark:text-zinc-400 italic">"${r.comment}"</p>
+                </div>
+            `).join('');
+        }
+
+        function openReviewModal() {
+            document.getElementById('reviewModal').classList.remove('hidden');
+        }
+
+        function closeReviewModal() {
+            document.getElementById('reviewModal').classList.add('hidden');
+        }
+
+        function handleReviewSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('reviewAuthor').value;
+            const service = document.getElementById('reviewService').value;
+            const rating = parseInt(document.getElementById('reviewRating').value);
+            const comment = document.getElementById('reviewComment').value;
+
+            const newReview = { name, service, rating, comment };
+            const stored = JSON.parse(localStorage.getItem('palak_reviews') || '[]');
+            stored.unshift(newReview);
+            localStorage.setItem('palak_reviews', JSON.stringify(stored));
+
+            renderReviews();
+            closeReviewModal();
+            document.getElementById('addReviewForm').reset();
+        }
+    </script>
+</body>
+</html>
